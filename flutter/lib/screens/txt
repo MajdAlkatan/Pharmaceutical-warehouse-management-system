@@ -1,0 +1,719 @@
+// import 'package:app5/screens/detiles.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+
+// class testpage extends StatefulWidget {
+//   static String id = 'testpage';
+//   @override
+//   _testpageState createState() => _testpageState();
+// }
+
+// class _testpageState extends State<testpage>
+//     with SingleTickerProviderStateMixin {
+//   late TabController _tabController;
+//   List<Product> _products = [];
+//   List<Product> _antiInflammatoryProducts = [];
+//   List<Product> _analgesicsProducts = [];
+//   List<Product> _antipyreticsProducts = [];
+//   List<Product> _AntiInfective = [];
+//   int _selectedTabIndex = 0;
+//   @override
+//   void initState() {
+//     super.initState();
+//     _tabController = TabController(length: 12, vsync: this);
+//     _tabController.addListener(_handleTabSelection);
+//     fetchProducts("ALL").then((products) {
+//       setState(() {
+//         _products = products;
+//       });
+//     }).catchError((error) {
+//       print('Error: $error');
+//     });
+//   }
+
+//   void _handleTabSelection() {
+//     String sectionName;
+//     switch (_tabController.index) {
+//       case 0:
+//         sectionName = "ALL";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//             _selectedTabIndex = _tabController.index;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 1:
+//         sectionName = "Anti-infective";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _AntiInfective = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 2:
+//         sectionName = "Anti-inflammatory";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _antiInflammatoryProducts = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 3:
+//         sectionName = "Analgesics";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _analgesicsProducts = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 4:
+//         sectionName = "Antipyretics";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 5:
+//         sectionName = "Antihistamines";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 6:
+//         sectionName = "Cardiovascular";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 7:
+//         sectionName = "Endocrine";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 8:
+//         sectionName = "Psychiatric";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 9:
+//         sectionName = "Neurological";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 10:
+//         sectionName = "Oncologic";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       case 11:
+//         sectionName = "Immunomodulatory";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//         break;
+//       default:
+//         sectionName = "ALL";
+//         fetchProducts(sectionName).then((products) {
+//           setState(() {
+//             _products = products;
+//           });
+//         }).catchError((error) {
+//           print('Error: $error');
+//         });
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     _tabController.dispose();
+//     super.dispose();
+//   }
+
+//   Future<List<Product>> fetchProducts(String sectionName) async {
+//     String apiUrl = 'http://10.0.2.2:8000/api/show_medicin_by_section';
+
+//     var response = await http.post(Uri.parse(apiUrl), body: {
+//       'name': sectionName,
+//     });
+
+//     if (response.statusCode == 200) {
+//       var data = json.decode(response.body);
+//       List<Product> products = [];
+//       for (var item in data) {
+//         products.add(Product.fromJson(item));
+//       }
+//       return products;
+//     } else {
+//       throw Exception('Failed to fetch products');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Product Catalog'),
+//         ),
+//         body: Column(
+//           children: [
+//             TabBar(
+//               controller: _tabController,
+//               labelColor: Colors.blue,
+//               unselectedLabelColor: Colors.grey,
+//               isScrollable: true,
+//               indicator: const UnderlineTabIndicator(
+//                 borderSide: BorderSide(width: 3, color: Colors.blue),
+//                 insets: EdgeInsets.symmetric(horizontal: 12),
+//               ),
+//               labelStyle:
+//                   const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+//               labelPadding: const EdgeInsets.symmetric(horizontal: 18),
+//               tabs: const [
+//                 Tab(text: "ALL "),
+//                 Tab(text: "Anti-infective "),
+//                 Tab(text: "Anti-inflammatory "),
+//                 Tab(text: "Analgesics"),
+//                 Tab(text: "Antipyretics"),
+//                 Tab(text: "Antihistamines"),
+//                 Tab(text: "Cardiovascular "),
+//                 Tab(text: "Endocrine "),
+//                 Tab(text: "Psychiatric "),
+//                 Tab(text: "Neurological "),
+//                 Tab(text: "Oncologic "),
+//                 Tab(text: "Immunomodulatory  "),
+//               ],
+//             ),
+//             Expanded(
+//               child: TabBarView(
+//                 controller: _tabController,
+//                 children: [
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       final product = _products[index];
+//                       return InkWell(
+//                         onTap: () {
+//                           Navigator.of(context).push(MaterialPageRoute(
+//                               builder: (context) => const ItemsDetails()));
+//                         },
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(15),
+//                           child: Card(
+//                             color: Color(0xff1B185B),
+//                             elevation: 20,
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Container(
+//                                   decoration: BoxDecoration(
+//                                     borderRadius: BorderRadius.circular(20),
+//                                   ),
+//                                   width: double.infinity,
+//                                   child: ClipRRect(
+//                                     borderRadius: BorderRadius.circular(20),
+//                                     child: Image.asset(
+//                                       "image/BOITE-MEDICAMENT-01.png",
+//                                       fit: BoxFit.cover,
+//                                       height: 200,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 SizedBox(height: 10),
+//                                 Text(
+//                                   product.name,
+//                                   style: TextStyle(
+//                                     fontSize: 18,
+//                                     fontWeight: FontWeight.bold,
+//                                     color: Colors.white,
+//                                   ),
+//                                 ),
+//                                 SizedBox(height: 5),
+//                                 Text(
+//                                   product.price,
+//                                   style: TextStyle(
+//                                     fontSize: 14,
+//                                     color: Colors.white,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   ),
+//                   GridView.builder(
+//                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//                         maxCrossAxisExtent: 2, mainAxisExtent: 255),
+//                     itemCount: _products.length,
+//                     itemBuilder: (BuildContext context, int index) {
+//                       return cardforgridview(product: _products[index]);
+//                     },
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class cardforgridview extends StatelessWidget {
+//   cardforgridview({
+//     super.key,
+//     required this.product,
+//   });
+
+//   Product product;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         Navigator.of(context).push(
+//             MaterialPageRoute(builder: (context) => const ItemsDetails()));
+//       },
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Card(
+//           color: Color(0xff1B185B),
+//           elevation: 20,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Container(
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(20),
+//                 ),
+//                 width: double.infinity,
+//                 child: ClipRRect(
+//                   borderRadius: BorderRadius.circular(20),
+//                   child: Image.asset(
+//                     "image/BOITE-MEDICAMENT-01.png",
+//                     fit: BoxFit.cover,
+//                     height: 200,
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(height: 10),
+//               Text(
+//                 product.name,
+//                 style: TextStyle(
+//                   fontSize: 18,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.white,
+//                 ),
+//               ),
+//               SizedBox(height: 5),
+//               Text(
+//                 product.price,
+//                 style: TextStyle(
+//                   fontSize: 14,
+//                   color: Colors.white,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class Product {
+//   final String name;
+//   final String price;
+//   final String imageUrl;
+
+//   Product({
+//     required this.name,
+//     required this.price,
+//     required this.imageUrl,
+//   });
+
+//   factory Product.fromJson(Map<String, dynamic> json) {
+//     return Product(
+//       name: json['sientific_name'] ?? "",
+//       price: json['price'] ?? "",
+//       imageUrl: json['img'] ?? "",
+//     );
+//   }
+// }
+
+// void main() {
+//   runApp(MaterialApp(home: testpage()));
+// }/////////////////////////////
+// import 'package:app5/screens/detiles.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+
+// class Product {
+//   final String name;
+
+//   Product(this.name);
+// }
+
+// class testpage extends StatefulWidget {
+//   static String id = 'testpage';
+//   @override
+//   _testpageState createState() => _testpageState();
+// }
+
+// class _testpageState extends State<testpage> {
+//   int _selectedTabIndex = 0;
+//   List<Product> _products = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchProducts("ALL").then((products) {
+//       setState(() {
+//         _products = products;
+//       });
+//     }).catchError((error) {
+//       print('Error: $error');
+//     });
+//   }
+
+//   Future<List<Product>> fetchProducts(String sectionName) async {
+//     final response = await http.post(
+//       Uri.parse('http://10.0.2.2:8000/api/show_medicin_by_section'),
+//       body: jsonEncode({'name': sectionName}),
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     );
+
+//     if (response.statusCode == 200) {
+//       final List<dynamic> responseData = jsonDecode(response.body);
+//       return responseData
+//           .map((productData) => Product(productData['trade_name']))
+//           .toList();
+//     } else {
+//       throw Exception('Failed to fetch products');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData.dark(),
+//       home: Scaffold(
+        
+//         appBar: AppBar(
+          
+//           title: Text('Product Catalog'),
+//         ),
+        
+//         body: Column(
+//           children: [
+//             // Search Bar and Drawer
+//             // Place your search bar and drawer widgets here
+
+//             // Tab Bar
+//             Container(
+//               height: 48,
+//               child: ListView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 itemCount: 12, // Number of sections
+//                 itemBuilder: (BuildContext context, int index) => InkWell(
+//                   onTap: () {
+//                     String? sectionName;
+//                     if (index == 0) {
+//                       sectionName = "ALL";
+//                     } else if (index == 1) {
+//                       sectionName = "Analgesics";
+//                     } else if (index == 2) {
+//                       sectionName = "Anti-infective";
+//                     } else if (index == 3) {
+//                       sectionName = "Anti-inflammatory";
+//                     } else if (index == 4) {
+//                       sectionName = "Antihistamines";
+//                     } else if (index == 5) {
+//                       sectionName = "Antipyretics";
+//                     } else if (index == 6) {
+//                       sectionName = "Cardiovascular";
+//                     } else if (index == 7) {
+//                       sectionName = "Endocrine";
+//                     } else if (index == 8) {
+//                       sectionName = "Immunomodulatory";
+//                     } else if (index == 9) {
+//                       sectionName = "Neurological";
+//                     } else if (index == 10) {
+//                       sectionName = "Oncologic";
+//                     } else if (index == 11) {
+//                       sectionName = "Psychiatric";
+//                     }
+//                     fetchProducts(sectionName!).then((products) {
+//                       setState(() {
+//                         _selectedTabIndex = index;
+//                         _products = products;
+//                       });
+//                     }).catchError((error) {
+//                       print('Error: $error');
+//                     });
+//                   },
+//                   child: Container(
+//                     padding: EdgeInsets.symmetric(horizontal: 16),
+//                     color: _selectedTabIndex == index
+//                         ? Colors.blue
+//                         : Colors.transparent,
+//                     child: Center(
+//                       child: Text(
+//                         index == 0
+//                             ? 'ALL'
+//                             : index == 1
+//                                 ? 'Analgesics'
+//                                 : index == 2
+//                                     ? 'Anti-infective'
+//                                     : index == 3
+//                                         ? "Anti-inflammatory"
+//                                         : index == 4
+//                                             ? "Antihistamines"
+//                                             : index == 5
+//                                                 ? "Antipyretics"
+//                                                 : index == 6
+//                                                     ? "Cardiovascular"
+//                                                     : index == 7
+//                                                         ? "Endocrine"
+//                                                         : index == 8
+//                                                             ? "Immunomodulatory"
+//                                                             : index == 9
+//                                                                 ? "Neurological"
+//                                                                 : index == 10
+//                                                                     ? "Oncologic"
+//                                                                     : "Psychiatric",
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontWeight: _selectedTabIndex == index
+//                               ? FontWeight.bold
+//                               : FontWeight.normal,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ),
+
+//             // Product Grid
+//             Expanded(
+//               child: GridView.builder(
+//                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                   crossAxisCount: 2,
+//                 ),
+//                 itemCount: _products?.length ?? 0,
+//                 itemBuilder: (BuildContext context, int index) {
+//                   final product = _products[index];
+//                   return InkWell(
+//                     onTap: () {
+//                       Navigator.of(context).push(MaterialPageRoute(
+//                           builder: (context) => ItemsDetails()));
+//                     },
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(15),
+//                       child: Card(
+//                         color: Color(0xff1B185B),
+//                         elevation: 20,
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Container(
+//                               decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.circular(20),
+//                               ),
+//                               width: double.infinity,
+//                               child: ClipRRect(
+//                                 borderRadius: BorderRadius.circular(20),
+//                                 child: Image.asset(
+//                                   "image/BOITE-MEDICAMENT-01.png",
+//                                   height: 99,
+//                                   width: 600,
+//                                   fit: BoxFit.cover,
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 10,
+//                             ),
+//                             Text(
+//                               product.name,
+//                               style: const TextStyle(
+//                                 fontSize: 14,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                             const SizedBox(
+//                               height: 3,
+//                             ),
+//                             Text(
+//                               product.name,
+//                               style: TextStyle(
+//                                 fontSize: 10,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.grey[400],
+//                               ),
+//                             ),
+//                             const SizedBox(
+//                               height: 4,
+//                             ),
+//                             Text(
+//                               product.name,
+//                               style: TextStyle(
+//                                 fontSize: 12,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.orange[400],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// void main() {
+//   runApp(testpage());
+// }
+

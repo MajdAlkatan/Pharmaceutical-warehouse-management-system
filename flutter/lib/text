@@ -1,0 +1,151 @@
+DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        // bottomNavigationBar: BottomNavigationBar(
+        //   onTap: (value) {
+        //     setState(() {
+        //       selectedIndex = value;
+        //     });
+        //   },
+        //   currentIndex: selectedIndex,
+        //   items: [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.settings), label: "Settings"),
+        //   ],
+        // ),
+        appBar: AppBar(
+          bottom: TabBar(
+              indicatorColor: Colors.blue,
+              unselectedLabelColor: Color.fromARGB(255, 178, 178, 178),
+              labelColor: Colors.blue,
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.laptop),
+                ),
+                Tab(
+                  icon: Icon(Icons.phone_android),
+                ),
+                Tab(
+                  icon: Icon(Icons.extension),
+                ),
+              ]),
+          titleTextStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          shadowColor: const Color.fromARGB(255, 0, 0, 0),
+          elevation: 10,
+          /* leading: IconButton(
+              onPressed: () {
+                setState(() {
+                  print("majd");
+                });
+              },
+              icon: Icon(Icons.facebook)),*/
+          backgroundColor: Color.fromARGB(255, 57, 61, 57),
+          centerTitle: true,
+          title: Text(
+            "Drawer",
+          ),
+          actions: [
+            IconButton(onPressed: () {}, icon: Icon(Icons.list))
+          ], //اكثر الودجيت المستعملة فيها ال الرموز
+        ),
+        drawer: Drawer(
+          child: ListView(children: [
+            Row(
+              children: [
+                ClipRRect(child: Image.asset("image/th.jpeg")),
+              ],
+            )
+          ]),
+        ),
+        key: ddrawer,
+        body: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(children: [
+            // CustomListTile(
+            //     date: "2003-5-1",
+            //     email: "Ameerlkatan@gmail.com",
+            //     name: "Ameer_Alkatan",
+            //     images: "image/th.jpeg"),
+
+            // CustomListTile(
+            //     date: "1977-11-27",
+            //     email: "HoudaAboud@gmail.com",
+            //     name: "Houda_Aboud",
+            //     images: "image/th.jpeg"),
+            // CustomListTile(
+            //     date: "1966-4-4",
+            //     email: "EsmaaelAlkatan@gmail.com",
+            //     name: "Esmaael_Alkatan",
+            //     images: "image/th.jpeg"),
+            // CustomListTile(
+            //     date: "2001-9-19",
+            //     email: "MAjdalkatan@gmail.com",
+            //     name: "Majd_Alkatan",
+            //     images: "image/th.jpeg"),
+
+            // Container(
+            //   height: 300,
+            //   child: PageView.builder(
+            //     itemCount: 2,
+            //     itemBuilder: (context, index) {
+            //       return Image.asset(
+            //         imagename[index],
+            //         fit: BoxFit.contain,
+            //       );
+            //     },
+            //   ),
+            // ),
+          ]),
+        
+        ),
+      ),
+    );
+  }import 'package:flutter/material.dart';
+  import 'main.dart';
+  
+  class CustomListTile extends StatelessWidget {
+    const CustomListTile(
+        {super.key,
+        required this.date,
+        required this.email,
+        required this.name,
+        required this.images});
+    final String name;
+    final String email;
+    final String date;
+    final String images;
+    @override
+    Widget build(BuildContext context) {
+      return Card(
+        color: Color.fromARGB(255, 168, 168, 168),
+        child: Padding(
+          padding: EdgeInsets.only(left: 4.0),
+          child: Row(
+            children: [
+              Container(
+                width: 70,
+                height: 70,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(70),
+                  child: Image.asset(
+                    images,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: Text("$name"),
+                  subtitle: Text("$email"),
+                  trailing: Text("$date"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+}
